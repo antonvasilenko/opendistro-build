@@ -10,7 +10,7 @@
 #
 # Usage:         ./plugins-info.sh $PLUGIN_CATEGORY $RETURN_TYPE
 #                $PLUGIN_CATEGORY : elasticsearch | kibana | client | library  (required)
-#                $RETURN_TYPE     : plugin_location | plugin_git | plugin_version | plugin_build
+#                $RETURN_TYPE     : plugin_location* | plugin_git | plugin_version | plugin_build
 #                                   plugin_type | ......
 #                                 ($PLUGIN_LIST file for more return types)
 #
