@@ -72,7 +72,7 @@ IFS=,
 for plugin_category in $PLUGIN_CATEGORY
 do
   IFS=$OLDIFS
-  PLUGINS_LOCATION_ARRAY=( `$REPO_ROOT/release-tools/plugins-info.sh $plugin_category plugin_location` )
+  PLUGINS_LOCATION_ARRAY=( `$REPO_ROOT/release-tools/plugins-info.sh $plugin_category plugin_location_staging` )
   PLUGINS_TYPE_ARRAY=( `$REPO_ROOT/release-tools/plugins-info.sh $plugin_category plugin_type | sed 's/\[//g;s/\]//g;s/ *//g'` )
   PLUGINS_KEYWORD_ARRAY=( `$REPO_ROOT/release-tools/plugins-info.sh $plugin_category plugin_keyword | sed 's/\[/#/g;s/\]/#/g;s/ *//g;s/##/None/g;s/#//g'` )
   PLUGINS_GIT=`$REPO_ROOT/release-tools/plugins-info.sh $plugin_category plugin_git | tr '\n' ' '`
