@@ -32,9 +32,8 @@ REQUIRE_INSTALL=`echo $3 | tr '[:upper:]' '[:lower:]'`
 if [ -z "$PLUGIN_CATEGORY" ] || [ -z "$RETURN_TYPE" ]
 then
   echo "Please enter \$PLUGIN_CATEGORY \$RETURN_TYPE [\$REQUIRE_INSTALL] as parameter(s)"
-  echo "Example: \"$0 elasticsearch zip\" (Retrieve es plugins s3 paths for zip formats)"
-  echo "Example: \"$0 elasticsearch rpm\" (Retrieve es plugins s3 paths for rpm formats"
-  echo "Example: \"$0 kibana git\" (Retrieve kibana plugins s3 paths for git urls)"
+  echo "Example: \"$0 elasticsearch plugin_version\" (Retrieve es plugins versions)"
+  echo "Example: \"$0 kibana plugin_git\" (Retrieve kibana plugins s3 paths for git urls)"
   exit 1
 fi
 

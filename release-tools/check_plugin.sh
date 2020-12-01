@@ -95,7 +95,7 @@ do
     plugin_type_array=( `echo ${PLUGINS_TYPE_ARRAY[$pindex]} | tr ',' ' '` )
     plugin_keyword_array=( `echo ${PLUGINS_KEYWORD_ARRAY[$pindex]} | tr ',' ' '` )
     plugin_total=$((plugin_total+${#plugin_type_array[@]}))
-    plugin_tag=${PLUGINS_GIT_ARRAY[$pindex]}
+    plugin_git=${PLUGINS_GIT_ARRAY[$pindex]}
 
     IFS=`echo -ne "\n\b"`
 
