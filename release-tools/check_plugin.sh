@@ -113,7 +113,7 @@ do
         fi
         if [ -z "$plugin_latest" ]
         then
-          plugin_tag=`$ROOT/release-tools/plugin_tag.sh $plugin_git $ODFE_VERSION`
+          plugin_tag=`$REPO_ROOT/release-tools/plugin_tag.sh $plugin_git $ODFE_VERSION`
           if [ -z "$plugin_tag" ]
           then
             plugin_latest="unavailable:${plugin_type_array[$tindex]}:${plugin_name}"
