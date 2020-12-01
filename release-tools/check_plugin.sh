@@ -80,7 +80,7 @@ do
   unavailable_plugin=()
   inprogress_plugin=()
   available_plugin=()
-  IFS=' ' read -r -a plugin_git_arr <<< $PLUGINS_GIT
+  IFS=' ' read -r -a PLUGINS_GIT_ARRAY <<< $PLUGINS_GIT
   echo ""
 
   echo "Proceed to check ($plugin_category):"
@@ -95,6 +95,7 @@ do
     plugin_type_array=( `echo ${PLUGINS_TYPE_ARRAY[$pindex]} | tr ',' ' '` )
     plugin_keyword_array=( `echo ${PLUGINS_KEYWORD_ARRAY[$pindex]} | tr ',' ' '` )
     plugin_total=$((plugin_total+${#plugin_type_array[@]}))
+    plugin_tag=${PLUGINS_GIT_ARRAY[$pindex]}
 
     IFS=`echo -ne "\n\b"`
 
@@ -112,8 +113,15 @@ do
         fi
         if [ -z "$plugin_latest" ]
         then
-          plugin_latest="unavailable:${plugin_type_array[$tindex]}:${plugin_name}"
-          unavailable_plugin+=( $plugin_latest )
+          plugin_tag=`$ROOT/release-tools/plugin_tag.sh $plugin_git $ODFE_VERSION`
+          if [ -z "$plugin_tag" ]
+          then
+            plugin_latest="unavailable:${plugin_type_array[$tindex]}:${plugin_name}"
+            unavailable_plugin+=( $plugin_latest )
+          else
+            plugin_latest="in_progress:${plugin_type_array[$tindex]}:${plugin_name}"
+            inprogress_plugin+=( $plugin_latest )
+          fi
         else
           plugin_latest="isavailable:${plugin_type_array[$tindex]}:${plugin_latest}"
           available_plugin+=( $plugin_latest )
@@ -144,20 +152,20 @@ do
     echo "<br><br>" >> message.md
   fi
   
-#  echo "<h2><p style='color:gold;'><b>IN PROGRESS</b></p></h2>" >> message.md
-#  if [ "${#inprogress_plugin[*]}" -gt 0 ]
-#  then
-#    RUN_STATUS=1
-#    echo "<ol>" >> message.md
-#    for item in ${inprogress_plugin[*]}
-#    do
-#      item=`echo $item | awk -F ':' '{print $NF}'`
-#      echo "<li><h3>$item</h3></li>" >> message.md
-#      echo ":hourglass_flowing_sand: $item " >> chime_message.md
-#    done
-#    echo "</ol>" >> message.md
-#    echo "<br><br>" >> message.md
-#  fi
+  echo "<h2><p style='color:gold;'><b>IN PROGRESS</b></p></h2>" >> message.md
+  if [ "${#inprogress_plugin[@]}" -gt 0 ]
+  then
+    RUN_STATUS=1
+    echo "<ol>" >> message.md
+    for item in ${inprogress_plugin[@]}
+    do
+      item=`echo $item | awk -F ':' '{print $NF}'`
+      echo "<li><h3>$item</h3></li>" >> message.md
+      echo ":hourglass_flowing_sand: $item " >> chime_message.md
+    done
+    echo "</ol>" >> message.md
+    echo "<br><br>" >> message.md
+  fi
 
   echo "<h2><p style='color:green;;'><b>AVAILABLE</b></p></h2>" >> message.md
   if [ "${#available_plugin[@]}" -gt 0 ]

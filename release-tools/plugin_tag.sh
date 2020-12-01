@@ -38,7 +38,7 @@ GIT_REPONAMES=$1
 OLDIFS=$IFS
 
 # Avoid issues when running on windows
-OD_VERSION=`python $REPO_ROOT/bin/version-info --od`
+OD_VERSION=`$REPO_ROOT/release-tools/version-info.py --od`
 
 # Use Major.Minor only to check available tags
 if [ "$USE_PATCH_VERSION" -eq 0 ]
@@ -56,7 +56,7 @@ fi
 IFS=","
 for REPO in $GIT_REPONAMES
 do
-  git ls-remote --tags "$GIT_BASEURL/$REPO" v* | grep $OD_VERSION | grep -oh "v[0-9.]*" | sort | tail -n 1
+  git ls-remote --tags "$GIT_BASEURL/$REPO" | grep "tags/v" | grep $OD_VERSION | grep -oh "v[0-9.]*" | sort | tail -n 1
 done
 
 
