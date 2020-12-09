@@ -42,13 +42,14 @@ jobs:
           ref: main
       - name: IT
         run: |
-          sed -i "s/^\(\s*image\s*:\s*\).*/\1opendistro-for-elasticsearch\/opendistro-for-elasticsearch:latest/" docker-compose.yml
-          docker login --username $DOCKER_USER --password $DOCKER_PASS
+          #!/bin/bash
+          #sed -i "s/^\(\s*image\s*:\s*\).*/\1opendistro-for-elasticsearch\/opendistro-for-elasticsearch:latest/" docker-compose.yml
+          #docker login --username $DOCKER_USER --password $DOCKER_PASS
           docker-compose up -d
           ls -ltr;
           go clean -testcache;
           go test -tags=integration ./it;
-          docker logout
+          #docker logout
         env: 
           ODFE_ENDPOINT : "https://localhost:9200"
           ODFE_USER : "admin"
