@@ -43,7 +43,7 @@ jobs:
       - name: IT
         run: |
           #!/bin/bash
-          sed -i "s/^\(\s*image\s*:\s*\).*/\1opendistro-for-elasticsearch\/opendistro-for-elasticsearch:latest/" docker-compose.yml
+          sed -i "s/^\(\s*image\s*:\s*\).*/\1opendistroforelasticsearch\/opendistroforelasticsearch:latest/" docker-compose.yml
           docker login --username $DOCKER_USER --password $DOCKER_PASS
           docker-compose up -d
           ls -ltr;
