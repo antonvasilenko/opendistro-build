@@ -25,11 +25,10 @@ jobs:
         #!/bin/bash
         S3_BUCKET_PROD="artifacts.opendistroforelasticsearch.amazon.com"
         S3_BUCKET_PLUGIN="artifacts.learning"
-        SOURCE_DIR=`clients/odfe-cli`
         TAG_VERSION="$(jq '.["odfe-cli"].cutversion' ./bin/plugins.json |sed 's/"//g')"
         echo $TAG_VERSION
-        aws s3 sync s3://$S3_BUCKET_PLUGIN/$SOURCE_DIR/linux/ s3://$S3_BUCKET_PROD/downloads/elasticsearch-clients/opendistro-cli/ --exclude "*" --include "odfe-cli-${TAG_VERSION}*" --quiet
-        aws s3 sync s3://$S3_BUCKET_PLUGIN/$SOURCE_DIR/mac/ s3://$S3_BUCKET_PROD/downloads/elasticsearch-clients/opendistro-cli/ --exclude "*" --include "odfe-cli-${TAG_VERSION}*" --quiet
-        aws s3 sync s3://$S3_BUCKET_PLUGIN/$SOURCE_DIR/windows/ s3://$S3_BUCKET_PROD/downloads/elasticsearch-clients/opendistro-cli/ --exclude "*" --include "odfe-cli-${TAG_VERSION}*" --quiet
+        aws s3 sync s3://$S3_BUCKET_PLUGIN/clients/odfe-cli/linux/ s3://$S3_BUCKET_PROD/downloads/elasticsearch-clients/opendistro-cli/ --exclude "*" --include "odfe-cli-${TAG_VERSION}*" --quiet
+        aws s3 sync s3://$S3_BUCKET_PLUGIN/clients/odfe-cli/mac/ s3://$S3_BUCKET_PROD/downloads/elasticsearch-clients/opendistro-cli/ --exclude "*" --include "odfe-cli-${TAG_VERSION}*" --quiet
+        aws s3 sync s3://$S3_BUCKET_PLUGIN/clients/odfe-cli/windows/ s3://$S3_BUCKET_PROD/downloads/elasticsearch-clients/opendistro-cli/ --exclude "*" --include "odfe-cli-${TAG_VERSION}*" --quiet
         aws s3 ls s3://$S3_BUCKET_PROD/downloads/elasticsearch-clients/opendistro-cli/ | grep $TAG_VERSION
         aws cloudfront create-invalidation --distribution-id E1VG5HMIWI4SA2 --paths "/downloads/elasticsearch-clients/opendistro-cli/*"
